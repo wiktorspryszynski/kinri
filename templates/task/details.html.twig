@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Task Details{% endblock %}
+
+{% block body %}
+    <h1>Task Details</h1>
+
+    <p><strong>Title:</strong> {{ task.title }}</p>
+    <p><strong>Status:</strong> {{ task.done ? 'Done' : 'Not done' }}</p>
+    <p><strong>Assignee:</strong>
+        {% if task.assignee %}
+            {{ task.assignee.name }} ({{ task.assignee.email }})
+        {% else %}
+            Unassigned
+        {% endif %}
+    </p>
+    <a href="{{ path('task_index') }}">Back to tasks</a>
+    
+{% endblock %}
