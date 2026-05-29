@@ -5,6 +5,8 @@
 {% block body %}
     <h1>Tasks</h1>
 
+    <p><a href="{{ path('task_new') }}">New task</a></p>
+
     <ul>
         {% for task in tasks %}
             <li>
