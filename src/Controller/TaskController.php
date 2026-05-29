@@ -65,6 +65,33 @@ final class TaskController extends AbstractController
         ]);
     }
 
+    #[Route('/tasks/{id}/delete', name: 'task_delete', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
+    public function delete(Request $request, int $id, TaskRepository $taskRepository, EntityManagerInterface $entityManager): Response
+    {
+        $task = $taskRepository->find($id);
+
+        if ($task === null) {
+            throw $this->createNotFoundException('Task not found.');
+        }
+
+        if ($request->isMethod('POST')) {
+            if (!$this->isCsrfTokenValid('delete'.$task->getId(), (string) $request->request->get('_token'))) {
+                throw $this->createAccessDeniedException('Invalid CSRF token.');
+            }
+
+            $entityManager->remove($task);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Task deleted successfully.');
+
+            return $this->redirectToRoute('task_index');
+        }
+
+        return $this->render('task/task_delete_confirmation.html.twig', [
+            'task' => $task,
+        ]);
+    }
+
     #[Route('/tasks/{id}', name: 'task_details', requirements: ['id' => '\d+'])]
     public function details(int $id, TaskRepository $taskRepository): Response
     {
