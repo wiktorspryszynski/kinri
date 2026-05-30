@@ -1,0 +1,57 @@
+---
+description: Kinri Symfony 7 learning project — stack, progress, and how to work with Nick
+alwaysApply: true
+---
+
+# Kinri (Symfony 7 task manager)
+
+Learning project for Symfony + recruitment prep. Keep changes small and explain Symfony concepts.
+
+## Stack
+
+- Symfony 7, Doctrine ORM, PostgreSQL (Docker), Twig, Symfony Security, PHPUnit
+- Bootstrap 5 CDN only (no Node/PostCSS) — planned, not fully wired yet
+- AssetMapper + Stimulus (CSRF on login needs `csrf-protection` controller)
+
+## How to work with me
+
+- Explain **WHY** before code; pause on Symfony “magic” (autowiring, attributes, firewall)
+- Compare to vanilla PHP when helpful
+- Don’t over-engineer — I’m learning
+- Prefer **explain-only** or minimal diffs; I type most code unless I ask to implement
+
+## Architecture (mental model)
+
+```
+Request → Firewall (security.yaml) → access_control → Controller → Repository → Doctrine → DB
+Forms: TaskType + handleRequest → isValid() runs entity Assert constraints → persist/flush
+```
+
+## Done
+
+- Task CRUD: list, detail, shared `task/form.html.twig`, delete confirm + CSRF
+- Entities: `Task` (title, done, assignee), `User` (email, name, password, roles)
+- `User` table is `"user"` in Postgres — entity has `#[ORM\Table(name: '"user"')]`
+- Login/logout (session cookie), no signup; `/tasks` requires `ROLE_USER`
+- Dev users: `alice@example.com` / `bob@example.com`, password `dev` — run `php bin/console app:hash-dev-passwords` after DB reset
+- Validation: `Assert` on `Task.title`, `User.email`, `User.name`
+
+## Next (priority)
+
+1. **My tasks** — filter list by logged-in user (`app.user` / assignee)
+2. **PHPUnit** — one `WebTestCase` (login or create task)
+3. **Bootstrap CDN** in `base.html.twig` if time
+
+## Local dev gotchas
+
+- DB: Docker `database` service, host port **5434** (5432 taken by another project). `.env` `DATABASE_URL` must use `5434`
+- Beekeeper: host `127.0.0.1`, port `5434`, user `app`, password `!ChangeMe!`, database `app`
+- After `php.ini` or Docker changes: restart `symfony serve`
+- Symfony CLI may inject `DATABASE_URL` from Docker — keep `compose.override.yaml` ports aligned with `.env`
+
+## Key files
+
+- `src/Controller/TaskController.php`, `SecurityController.php`
+- `src/Entity/Task.php`, `User.php`
+- `src/Form/TaskType.php`
+- `config/packages/security.yaml`, `csrf.yaml`
