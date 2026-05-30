@@ -39,7 +39,7 @@ Forms: TaskType + handleRequest → isValid() runs entity Assert constraints →
 - [x] Validation (entity-level): `Assert` on `Task.title`, `User.email`, `User.name`
 
 #### Symfony
-- [ ] **My tasks** — filter list by logged-in user (`app.user` / assignee)
+- [X] **My tasks** — filter list by logged-in user (`app.user` / assignee)
 - [ ] **Validation (deeper)** — exercise existing Assert constraints; optional `UniqueEntity` or one custom constraint
 - [ ] **PHPUnit** — one `WebTestCase` (login or invalid task form)
 
