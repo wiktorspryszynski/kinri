@@ -21,8 +21,7 @@
     <body>
         <nav>
             {% if app.user %}
-                {# Signed in as {{ app.user.name }} ({{ app.user.email }}) #}
-                Signed in as {{ app.user.userIdentifier }}
+                Signed in as {{ app.user.name }} ({{ app.user.email }})
                 · <a href="{{ path('app_logout') }}">Log out</a>
             {% else %}
                 <a href="{{ path('app_login') }}">Log in</a>
