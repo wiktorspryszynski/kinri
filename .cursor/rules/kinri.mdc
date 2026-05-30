@@ -19,6 +19,8 @@ Learning project for Symfony + recruitment prep. Keep changes small and explain 
 - Compare to vanilla PHP when helpful
 - Don’t over-engineer — I’m learning
 - Prefer **explain-only** or minimal diffs; I type most code unless I ask to implement
+- When implementing code, explain what each block does — block by block
+- When we finish a roadmap item, tick its checkbox in this file (`[ ]` → `[x]`)
 
 ## Architecture (mental model)
 
@@ -27,20 +29,26 @@ Request → Firewall (security.yaml) → access_control → Controller → Repos
 Forms: TaskType + handleRequest → isValid() runs entity Assert constraints → persist/flush
 ```
 
-## Done
+## Progress
 
-- Task CRUD: list, detail, shared `task/form.html.twig`, delete confirm + CSRF
-- Entities: `Task` (title, done, assignee), `User` (email, name, password, roles)
-- `User` table is `"user"` in Postgres — entity has `#[ORM\Table(name: '"user"')]`
-- Login/logout (session cookie), no signup; `/tasks` requires `ROLE_USER`
-- Dev users: `alice@example.com` / `bob@example.com`, password `dev` — run `php bin/console app:hash-dev-passwords` after DB reset
-- Validation: `Assert` on `Task.title`, `User.email`, `User.name`
+- [x] Task CRUD: list, detail, shared `task/form.html.twig`, delete confirm + CSRF
+- [x] Entities: `Task` (title, done, assignee), `User` (email, name, password, roles)
+- [x] `User` table is `"user"` in Postgres — entity has `#[ORM\Table(name: '"user"')]`
+- [x] Login/logout (session cookie), no signup; `/tasks` requires `ROLE_USER`
+- [x] Dev users: `alice@example.com` / `bob@example.com`, password `dev` — run `php bin/console app:hash-dev-passwords` after DB reset
+- [x] Validation (entity-level): `Assert` on `Task.title`, `User.email`, `User.name`
 
-## Next (priority)
+#### Symfony
+- [ ] **My tasks** — filter list by logged-in user (`app.user` / assignee)
+- [ ] **Validation (deeper)** — exercise existing Assert constraints; optional `UniqueEntity` or one custom constraint
+- [ ] **PHPUnit** — one `WebTestCase` (login or invalid task form)
 
-1. **My tasks** — filter list by logged-in user (`app.user` / assignee)
-2. **PHPUnit** — one `WebTestCase` (login or create task)
-3. **Bootstrap CDN** in `base.html.twig` if time
+#### Cursor (recruitment prep)
+- [ ] **Scoped prompts** — use @-mentions on controller/entity/form; review diffs before accepting
+- [ ] **Optional** — second rule file for validation (`globs: src/Entity/**`) or one guided Agent task (“my tasks” end-to-end)
+
+#### Polish
+- [ ] **Bootstrap CDN** in `base.html.twig` if time
 
 ## Local dev gotchas
 
