@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Tasks{% endblock %}
+{% block title %}My Tasks{% endblock %}
 
 {% block body %}
-    <h1>Tasks</h1>
+    <h1>My Tasks</h1>
 
     <p><a href="{{ path('task_new') }}">New task</a></p>
 
@@ -18,11 +18,6 @@
                         {{ task.title }}
                     {% endif %}
                 </a>
-                {% if task.assignee %}
-                    — {{ task.assignee.name }}
-                {% else %}
-                    — <em>Unassigned</em>
-                {% endif %}
             </li>
         {% else %}
             <li>No tasks yet.</li>
